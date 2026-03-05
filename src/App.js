@@ -206,7 +206,7 @@ const NavigationApp = () => {
     return () => {
       map.removeEventListener('click', handleMapClick);
     };
-  }, [isAddingWaypoint]);
+  }, [isAddingWaypoint, addWaypoint]);
 
   // Handle live location updates
   const handleLocationUpdate = (newLocation) => {
