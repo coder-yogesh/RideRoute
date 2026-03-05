@@ -1,0 +1,41 @@
+.location-input-container {
+  position: relative; /* This is crucial for positioning the dropdown */
+  display: inline-block;
+}
+
+.location-input {
+  width: 250px;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%; /* Position it right below the input */
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1001; /* Make sure it's above the map */
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
