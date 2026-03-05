@@ -189,6 +189,20 @@ const NavigationApp = () => {
     };
   }, []);
 
+   // Add a waypoint at specified coordinates
+  const addWaypoint = async (lat, lng) => {
+    const address = await reverseGeocode(lat, lng);
+    const newWaypoint = {
+      id: Date.now(),
+      lat,
+      lng,
+      address,
+      isDraggable: true
+    };
+    
+    setWaypoints(prev => [...prev, newWaypoint]);
+  };
+
   // Handle map clicks for adding waypoints
   useEffect(() => {
     if (!isAddingWaypoint) return;
@@ -306,20 +320,6 @@ const NavigationApp = () => {
     setDestinationCoords({ lat: suggestion.lat, lng: suggestion.lng });
     setShowDestinationDropdown(false);
     setDestinationSuggestions([]);
-  };
-
-  // Add a waypoint at specified coordinates
-  const addWaypoint = async (lat, lng) => {
-    const address = await reverseGeocode(lat, lng);
-    const newWaypoint = {
-      id: Date.now(),
-      lat,
-      lng,
-      address,
-      isDraggable: true
-    };
-    
-    setWaypoints(prev => [...prev, newWaypoint]);
   };
 
   // Remove a waypoint
