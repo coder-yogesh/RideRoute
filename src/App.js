@@ -221,6 +221,7 @@ const NavigationApp = () => {
       map.removeEventListener('click', handleMapClick);
     };
   }, [isAddingWaypoint, addWaypoint]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   // Handle live location updates
   const handleLocationUpdate = (newLocation) => {
