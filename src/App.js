@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -190,8 +190,9 @@ const NavigationApp = () => {
   }, []);
 
    // Add a waypoint at specified coordinates
-  const addWaypoint = async (lat, lng) => {
+  const addWaypoint = useCallback(async (lat, lng) => {
     const address = await reverseGeocode(lat, lng);
+
     const newWaypoint = {
       id: Date.now(),
       lat,
@@ -199,12 +200,29 @@ const NavigationApp = () => {
       address,
       isDraggable: true
     };
-    
+
     setWaypoints(prev => [...prev, newWaypoint]);
-  };
+
+  }, []);
 
   // Handle map clicks for adding waypoints
   useEffect(() => {
+    if (!isAddingWaypoint) return;
+
+    const map = mapRef.current;
+    if (!map) return;
+
+    const handleMapClick = (e) => {
+      const { lat, lng } = e.latlng;
+      addWaypoint(lat, lng);
+      setIsAddingWaypoint(false);
+    };
+
+    map.addEventListener('click', handleMapClick);
+    return () => {
+      map.removeEventListener('click', handleMapClick);
+    };
+  }, [isAddingWaypoint, addWaypoint]); useEffect(() => {
     if (!isAddingWaypoint) return;
 
     const map = mapRef.current;
